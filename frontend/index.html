@@ -102,6 +102,9 @@
         <div class="controls-grid">
           <button type="button" id="btn-toggle-voice" class="btn btn-secondary"
                   aria-pressed="true">🔊 Voz activada</button>
+          <button type="button" id="btn-test-voice" class="btn btn-secondary">
+            Probar voz
+          </button>
           <button type="button" id="btn-replay" class="btn btn-secondary"
                   title="Reproduce la última seña confirmada">Reproducir última</button>
           <label class="toggle">
@@ -116,6 +119,7 @@
         <p class="controls-hint">
           El historial guardado conserva solo etiquetas y horas; nunca imágenes ni video.
         </p>
+        <p class="voice-status" id="voice-status" role="status" aria-live="polite"></p>
       </section>
 
       <section class="panel history-panel" aria-label="Traducciones recientes">

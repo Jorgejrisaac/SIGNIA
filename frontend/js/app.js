@@ -156,7 +156,9 @@ const dom = {
   historyLive: $('history-live'),
   btnClearHistory: $('btn-clear-history'),
   btnToggleVoice: $('btn-toggle-voice'),
+  btnTestVoice: $('btn-test-voice'),
   btnReplay: $('btn-replay'),
+  voiceStatus: $('voice-status'),
   toggleConfidence: $('toggle-confidence'),
   togglePersist: $('toggle-persist'),
   btnDiagnostics: $('btn-diagnostics'),
@@ -692,8 +694,14 @@ function setVoiceButton() {
   dom.btnToggleVoice.textContent = voiceButtonText(on);
   dom.btnToggleVoice.setAttribute('aria-pressed', String(on));
   dom.btnToggleVoice.disabled = !speech.supported;
+  dom.btnTestVoice.disabled = !speech.supported || !on;
   if (!speech.supported) {
     dom.btnToggleVoice.title = UI_TEXT.VOICE_UNSUPPORTED_TITLE;
+    dom.voiceStatus.textContent = 'La voz no está disponible en este navegador.';
+  } else if (!on) {
+    dom.voiceStatus.textContent = 'Voz desactivada.';
+  } else {
+    dom.voiceStatus.textContent = 'Voz lista. Pulsa “Probar voz” para verificar el audio.';
   }
 }
 
@@ -747,10 +755,21 @@ function bindEvents() {
     setVoiceButton();
   });
 
+  dom.btnTestVoice.addEventListener('click', () => {
+    const spoken = speech.speak('HOLA');
+    dom.voiceStatus.textContent = spoken
+      ? 'Prueba enviada: debes escuchar “Hola”.'
+      : 'No se pudo iniciar la voz. Revisa permisos y volumen multimedia.';
+  });
+
   dom.btnReplay.addEventListener('click', () => {
     const last = history.last();
     if (last && predictor && !predictor.isTestModel) {
-      speech.speak(last.label);
+      const spoken = speech.speak(last.label);
+      if (!spoken) {
+        dom.voiceStatus.textContent =
+          'No se pudo iniciar la voz. Pulsa “Probar voz” primero.';
+      }
     }
   });
 
@@ -793,7 +812,11 @@ function init() {
       dom.historyLive.textContent = UI_TEXT.signConfirmedAnnouncement(label);
       pulsePrediction();
       if (predictor && !predictor.isTestModel) {
-        speech.speak(label);
+        const spoken = speech.speak(label);
+        if (!spoken) {
+          dom.voiceStatus.textContent =
+            'La seña fue confirmada, pero el navegador no reprodujo la voz.';
+        }
       }
     },
   });

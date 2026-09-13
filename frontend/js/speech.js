@@ -126,6 +126,9 @@ export class SpeechController {
     }
     if (this.config.replaceOnNew) this.cancel();
     try {
+      // Safari/iOS and some Android browsers can leave synthesis paused after
+      // a previous utterance or after the page was backgrounded.
+      this.synthesis.resume?.();
       const utter = new this.Utterance(text);
       const { voice, lang } = this.resolveSpanishVoice();
       if (voice) utter.voice = voice;

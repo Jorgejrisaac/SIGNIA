@@ -463,6 +463,13 @@ body {
   color: var(--text-dim);
 }
 
+.voice-status {
+  min-height: 1.3em;
+  margin: 8px 0 0;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;
