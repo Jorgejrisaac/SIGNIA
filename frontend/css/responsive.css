@@ -38,8 +38,9 @@
   }
 
   .stage {
-    aspect-ratio: 3 / 4; /* selfie con mano: más alto en pantallas pequeñas */
-    min-height: 200px;
+    aspect-ratio: auto;
+    height: clamp(420px, 72svh, 600px);
+    min-height: 420px;
   }
 
   .panel {
@@ -129,6 +130,7 @@
 @media (max-width: 900px) and (orientation: landscape) {
   .stage {
     aspect-ratio: 16 / 9;
+    height: auto;
     min-height: 140px;
   }
 
