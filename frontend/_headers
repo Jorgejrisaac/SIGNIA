@@ -1,0 +1,20 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=()
+  X-Frame-Options: DENY
+
+/*.html
+  Cache-Control: no-cache
+
+/models/signia/*
+  Cache-Control: public, max-age=3600
+
+/vendor/*
+  Cache-Control: public, max-age=86400
+
+/vendor/mediapipe/wasm/*.wasm
+  Content-Type: application/wasm
+
+/vendor/mediapipe/hand_landmarker.task
+  Content-Type: application/octet-stream

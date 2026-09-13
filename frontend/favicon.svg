@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SIGNIA">
+  <rect width="64" height="64" rx="14" fill="#2563EB"/>
+  <rect x="4" y="4" width="56" height="56" rx="11" fill="none" stroke="#60A5FA" stroke-opacity="0.5" stroke-width="2"/>
+  <text x="32" y="45" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-size="38" font-weight="900" fill="#F8FAFC" text-anchor="middle">S</text>
+  <circle cx="17" cy="47" r="3.5" fill="#22C55E"/>
+</svg>

@@ -1,0 +1,23 @@
+# --- Núcleo: recolección, preprocesado, evaluación ---
+# MediaPipe 1.x ELIMINÓ la API legacy mp.solutions.hands. El proyecto usa
+# mp.tasks.vision.HandLandmarker con frontend/vendor/mediapipe/hand_landmarker.task
+# (el MISMO modelo y convención que el frontend). No bajar a 0.10.x.
+mediapipe>=1.0.0
+opencv-python>=4.8.0
+numpy>=1.26
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+pytest>=7.4.0
+
+# --- Entrenamiento ---
+tensorflow==2.19.0
+tf-keras==2.19.0
+
+# --- Conversión a TensorFlow.js (solo desarrollo) ---
+tensorflowjs==4.20.0
+
+# --- Compatibilidad con Windows (ver README, sección Instalación) ---
+# tensorflowjs 4.20 importa tensorflow_decision_forests, sin wheels en Windows:
+# requiere crear un shim vacío en .venv/Lib/site-packages/tensorflow_decision_forests/__init__.py
+# jax, jaxlib y flax se instalan con --only-binary=:all: para evitar compilar uvloop.

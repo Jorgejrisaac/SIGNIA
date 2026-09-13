@@ -1,0 +1,13 @@
+{
+  "name": "signia-parity",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prueba de paridad Python<->JavaScript de SIGNIA (Fase 8). No es parte del frontend.",
+  "type": "module",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0"
+  },
+  "scripts": {
+    "parity": "node parity.mjs"
+  }
+}

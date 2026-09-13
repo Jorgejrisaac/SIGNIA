@@ -1,0 +1,21 @@
+{
+  "name": "SIGNIA — Traductor de Lengua de Señas Colombiana",
+  "short_name": "SIGNIA",
+  "description": "Reconocimiento local de la Lengua de Señas Colombiana en tu dispositivo.",
+  "lang": "es-CO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

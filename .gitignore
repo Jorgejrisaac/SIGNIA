@@ -1,0 +1,25 @@
+# Python local environment and caches
+.venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local secrets and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Biometric dataset and generated preprocessing artifacts
+ai/dataset/raw/
+ai/dataset/processed/
+ai/dataset/reports/
+ai/training/reports/
+
+# Training-only model artifacts; production uses frontend/models/signia/
+ai/models/*.keras
+ai/models/*.h5
+
+# JavaScript test dependencies
+tests/js_parity/node_modules/
+node_modules/

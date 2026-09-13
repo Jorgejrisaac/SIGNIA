@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="SIGNIA — Traductor de Lengua de Señas Colombiana. Reconocimiento local en tu dispositivo: la cámara se procesa en el navegador, sin enviar video a servidores.">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="color-scheme" content="dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SIGNIA">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SIGNIA — Traductor de Lengua de Señas Colombiana">
+  <meta property="og:description" content="Reconocimiento local de señas de la Lengua de Señas Colombiana en tu dispositivo.">
+  <meta property="og:locale" content="es_CO">
+  <title>SIGNIA — Traductor de Lengua de Señas Colombiana</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <div class="app">
+    <header class="header">
+      <div class="header-brand">
+        <span class="brand-name" aria-hidden="true">SIGNIA</span>
+        <span class="brand-tagline">Traductor de Lengua de Señas Colombiana</span>
+      </div>
+
+      <div class="header-actions">
+        <div class="status-bar" aria-label="Estado del sistema">
+          <span class="chip" id="chip-camera" data-state="initializing">
+            <span class="chip-icon" aria-hidden="true">…</span>
+            <span class="chip-text">Inicializando cámara...</span>
+          </span>
+          <span class="chip" id="chip-model" data-state="initializing">
+            <span class="chip-icon" aria-hidden="true">…</span>
+            <span class="chip-text">Inicializando modelo...</span>
+          </span>
+          <span class="chip" id="chip-hand" data-state="no_hand">
+            <span class="chip-icon" aria-hidden="true">✋</span>
+            <span class="chip-text">Coloca tu mano frente a la cámara</span>
+          </span>
+        </div>
+
+        <button type="button" id="btn-diagnostics" class="btn btn-ghost"
+                aria-expanded="false" aria-controls="diagnostics">
+          Diagnóstico <span class="hint">(Alt+D)</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="main">
+      <section class="panel camera-panel" aria-label="Cámara">
+        <h2 class="panel-title">Cámara</h2>
+        <div class="stage">
+          <video id="video" autoplay playsinline muted class="stage-video"
+                 aria-label="Video de la cámara"></video>
+          <canvas id="overlay" class="stage-overlay" aria-hidden="true"></canvas>
+          <p id="stage-placeholder" class="stage-placeholder">
+            Inicializando cámara...
+          </p>
+          <div id="error-banner" class="banner banner-error" role="alert" hidden>
+            <p class="banner-title" id="error-banner-title"></p>
+            <p id="error-banner-text"></p>
+          </div>
+        </div>
+        <div class="camera-actions">
+          <button type="button" id="btn-retry-camera" class="btn btn-primary" hidden>
+            Reintentar cámara
+          </button>
+        </div>
+      </section>
+
+      <section class="panel translation-panel" aria-label="Traducción">
+        <h2 class="panel-title">Traducción</h2>
+
+        <div class="model-status" id="model-status">
+          <p class="model-status-title" id="model-status-title">Modelo no disponible</p>
+          <p class="model-status-detail" id="model-status-detail"></p>
+          <button type="button" id="btn-retry-model" class="btn btn-secondary btn-sm" hidden>
+            Reintentar
+          </button>
+        </div>
+
+        <div class="prediction" id="prediction">
+          <p class="prediction-label" id="prediction-label">Esperando una seña...</p>
+          <div class="prediction-confidence" id="prediction-confidence" hidden>
+            <span class="confidence-text" id="confidence-text">Confianza 0%</span>
+            <div class="confidence-track" aria-hidden="true">
+              <div class="confidence-fill" id="confidence-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel controls-panel" aria-label="Controles">
+        <h2 class="panel-title">Controles</h2>
+        <div class="controls-grid">
+          <button type="button" id="btn-toggle-voice" class="btn btn-secondary"
+                  aria-pressed="true">🔊 Voz activada</button>
+          <button type="button" id="btn-replay" class="btn btn-secondary"
+                  title="Reproduce la última seña confirmada">Reproducir última</button>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-confidence" checked>
+            <span>Mostrar confianza</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-persist">
+            <span>Guardar historial en este dispositivo</span>
+          </label>
+        </div>
+        <p class="controls-hint">
+          El historial guardado conserva solo etiquetas y horas; nunca imágenes ni video.
+        </p>
+      </section>
+
+      <section class="panel history-panel" aria-label="Traducciones recientes">
+        <div class="history-head">
+          <h2 class="panel-title">Traducciones recientes</h2>
+          <button type="button" id="btn-clear-history" class="btn btn-secondary btn-sm">
+            Limpiar historial
+          </button>
+        </div>
+        <p id="history-empty" class="history-empty">Aún no hay señas confirmadas.</p>
+        <ol id="history-list" class="history-list"></ol>
+        <div id="history-live" class="visually-hidden" aria-live="polite" role="status"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="privacy-note">
+        Tu cámara se procesa localmente. El video no se envía a servidores.
+      </p>
+      <p class="pending-note">
+        Reconocimiento LSC real: PENDIENTE DE VALIDACIÓN.
+      </p>
+    </footer>
+
+    <section id="diagnostics" class="diagnostics" aria-label="Panel de diagnóstico" hidden>
+      <h2 class="panel-title">Panel de diagnóstico (modo desarrollo)</h2>
+      <dl class="diagnostics-list">
+        <div><dt>Camera</dt><dd id="diag-camera">—</dd></div>
+        <div><dt>MediaPipe</dt><dd id="diag-mediapipe">—</dd></div>
+        <div><dt>Model</dt><dd id="diag-model">—</dd></div>
+        <div><dt>Input shape</dt><dd id="diag-input-shape">—</dd></div>
+        <div><dt>Output shape</dt><dd id="diag-output-shape">—</dd></div>
+        <div><dt>Model version</dt><dd id="diag-model-version">—</dd></div>
+        <div><dt>Hands detected</dt><dd id="diag-hands">0</dd></div>
+        <div><dt>Detection loop</dt><dd id="diag-loop">—</dd></div>
+        <div><dt>Detection calls</dt><dd id="diag-detect-calls">—</dd></div>
+        <div><dt>Last detection</dt><dd id="diag-last-ts">—</dd></div>
+        <div><dt>Detection result</dt><dd id="diag-detect-result">—</dd></div>
+        <div><dt>FPS aproximado</dt><dd id="diag-fps">—</dd></div>
+        <div><dt>RAW prediction</dt><dd id="diag-raw">—</dd></div>
+        <div><dt>SMOOTHED prediction</dt><dd id="diag-smoothed">—</dd></div>
+        <div><dt>Smoothing (F10)</dt><dd id="diag-smoothing">—</dd></div>
+        <div><dt>Modelo</dt><dd id="diag-model-info">—</dd></div>
+      </dl>
+    </section>
+
+    <div id="live-region" class="visually-hidden" aria-live="polite" role="status"></div>
+
+    <script src="vendor/tfjs/tf.min.js"></script>
+    <script src="js/features.js"></script>
+    <script type="module" src="js/handTracking.js"></script>
+    <script type="module" src="js/predictor.js"></script>
+    <script type="module" src="js/app.js"></script>
+  </div>
+</body>
+</html>

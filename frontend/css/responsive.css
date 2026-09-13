@@ -1,0 +1,147 @@
+/* SIGNIA — responsive F12 (móviles primero).
+ * Validado para: 320 / 375 / 390 / 430 / 768 / 1024 / 1440.
+ * Sin scroll horizontal, sin elementos cortados, controles táctiles >= 48px. */
+
+/* ---------------- Móvil (default): HEADER → CÁMARA → TRADUCCIÓN → CONTROLES → HISTORIAL */
+.main {
+  grid-template-areas:
+    "camera"
+    "translation"
+    "controls"
+    "history";
+}
+
+.camera-panel { grid-area: camera; }
+.translation-panel { grid-area: translation; }
+.controls-panel { grid-area: controls; }
+.history-panel { grid-area: history; }
+
+/* Header apilado en pantallas pequeñas */
+@media (max-width: 540px) {
+  .app {
+    padding: 10px 10px 32px;
+    padding: max(10px, env(safe-area-inset-top))
+             max(10px, env(safe-area-inset-right))
+             max(32px, env(safe-area-inset-bottom))
+             max(10px, env(safe-area-inset-left));
+    gap: 14px;
+  }
+
+  .brand-name {
+    font-size: 1.45rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  .stage {
+    aspect-ratio: 3 / 4; /* selfie con mano: más alto en pantallas pequeñas */
+    min-height: 200px;
+  }
+
+  .panel {
+    padding: 12px 14px;
+  }
+
+  .main {
+    gap: 14px;
+  }
+
+  .controls-grid {
+    flex-direction: column;
+  }
+
+  .controls-grid .btn,
+  .controls-grid .toggle {
+    width: 100%;
+  }
+
+  .history-head {
+    flex-wrap: wrap;
+  }
+
+  .history-head .btn {
+    width: 100%;
+  }
+
+  .prediction-label {
+    min-height: 1.2em;
+  }
+}
+
+@media (max-width: 360px) {
+  .app {
+    gap: 12px;
+  }
+
+  .panel {
+    padding: 11px 12px;
+  }
+
+  .brand-tagline {
+    font-size: 0.78rem;
+  }
+
+  .chip {
+    padding: 6px 9px;
+    font-size: 0.78rem;
+  }
+}
+
+/* ---------------- Tablet 768px en adelante: cámara | traducción */
+@media (min-width: 720px) {
+  .main {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-areas:
+      "camera translation"
+      "controls controls"
+      "history history";
+  }
+
+  .controls-grid {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------------- Escritorio ancho >= 1024px: más aire */
+@media (min-width: 1024px) {
+  .app {
+    padding: 20px 28px 56px;
+  }
+
+  .prediction-label {
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+  }
+
+  .controls-grid {
+    flex-wrap: nowrap;
+  }
+
+  .controls-grid .toggle {
+    flex: 1;
+  }
+}
+
+/* ---------------- Orientación horizontal en móvil: cámara 16/9 */
+@media (max-width: 900px) and (orientation: landscape) {
+  .stage {
+    aspect-ratio: 16 / 9;
+    min-height: 140px;
+  }
+
+  .main {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas:
+      "camera translation"
+      "controls controls"
+      "history history";
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

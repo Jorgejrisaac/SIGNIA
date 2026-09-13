@@ -1,0 +1,88 @@
+{
+  "model_name": "SIGNIA",
+  "model_version": 1,
+  "exported_at": "2026-08-14T23:40:42.351685",
+  "training_date": "2026-08-14T23:40:21.658952",
+  "python_version": "3.11.9",
+  "tensorflow_version": "2.19.0",
+  "keras_version": "3.15.1",
+  "architecture": [
+    {
+      "layer": "Input",
+      "shape": [
+        126
+      ]
+    },
+    {
+      "layer": "Dense",
+      "units": 128,
+      "activation": "relu"
+    },
+    {
+      "layer": "Dense",
+      "units": 64,
+      "activation": "relu"
+    },
+    {
+      "layer": "Dropout",
+      "rate": 0.3
+    },
+    {
+      "layer": "Dense",
+      "units": 10,
+      "activation": "softmax"
+    }
+  ],
+  "classes": [
+    "HOLA",
+    "ADIOS",
+    "GRACIAS",
+    "POR_FAVOR",
+    "SI",
+    "NO",
+    "AYUDA",
+    "BIEN",
+    "MAL",
+    "AMIGO"
+  ],
+  "n_classes": 10,
+  "input_shape": [
+    null,
+    126
+  ],
+  "output_shape": [
+    null,
+    10
+  ],
+  "n_features": 126,
+  "normalization": {
+    "method": "origen en muñeca + escala por tamaño de palma",
+    "wrist_index": 0,
+    "palm_index": 9,
+    "landmarks_per_hand": 21,
+    "coords_per_landmark": 3,
+    "hands": 2,
+    "hand_order": [
+      "left",
+      "right"
+    ],
+    "missing_hand_fill": "zeros",
+    "feature_size": 126
+  },
+  "seed": 42,
+  "persons": {
+    "train": [
+      "P01"
+    ],
+    "validation": [
+      "P01"
+    ],
+    "test": [
+      "P01"
+    ]
+  },
+  "validation_source": "random-fallback-single-person",
+  "random_fallback_single_person": true,
+  "best_val_accuracy": 1.0,
+  "source_keras": "C:\\Users\\Usuario\\Desktop\\SIGNIA\\ai\\models\\signia_model.keras"
+}
