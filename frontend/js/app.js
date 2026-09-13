@@ -807,6 +807,7 @@ function init() {
   // modelo de prueba (nunca presentar las palabras sintéticas como LSC real).
   flow = createConfirmedFlow({
     history,
+    resolveLabel: (index) => predictor?.classes?.[index] ?? index,
     onConfirm: (label) => {
       renderHistory();
       dom.historyLive.textContent = UI_TEXT.signConfirmedAnnouncement(label);

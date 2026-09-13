@@ -11,7 +11,7 @@
  * solo las confirmaciones de F10 entran aquí.
  */
 
-export function createConfirmedFlow({ history, onConfirm }) {
+export function createConfirmedFlow({ history, onConfirm, resolveLabel = (label) => label }) {
   return {
     /**
      * Procesa el resultado de TemporalSmoother.step().
@@ -26,9 +26,10 @@ export function createConfirmedFlow({ history, onConfirm }) {
         smoothed.label !== null;
       if (!confirmed) return null;
 
-      const entry = history.pushIfNew(smoothed.label, smoothed.confidence);
+      const label = resolveLabel(smoothed.label);
+      const entry = history.pushIfNew(label, smoothed.confidence);
       if (!entry) return null; // duplicado continuo: no registrar ni hablar
-      onConfirm?.(smoothed.label, entry);
+      onConfirm?.(label, entry);
       return entry;
     },
 

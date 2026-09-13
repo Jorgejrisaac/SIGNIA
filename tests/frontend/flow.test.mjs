@@ -114,3 +114,19 @@ test('un frame aislado durante la seña no genera evento extra', () => {
   assert.equal(p.confirmations.length, 1);
   assert.equal(p.history.size, 1);
 });
+
+test('convierte el índice confirmado a etiqueta textual para historial y voz', () => {
+  const history = new History();
+  const flow = createConfirmedFlow({
+    history,
+    resolveLabel: (index) => ['HOLA', 'SI', 'NO'][index],
+  });
+  const entry = flow.onFrame({
+    reason: 'ok',
+    isNewConfirmation: true,
+    label: 1,
+    confidence: 0.8,
+  });
+  assert.equal(entry.label, 'SI');
+  assert.equal(history.last().label, 'SI');
+});
