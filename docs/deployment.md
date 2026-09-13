@@ -73,3 +73,7 @@ Vercel tambien es compatible. Configura el proyecto con:
 `frontend/vercel.json` aplica los headers de seguridad. Vercel entrega HTTPS
 automaticamente, por lo que la camara funciona desde un telefono usando la
 URL de produccion.
+
+Si Vercel se configura con la raiz del repositorio en lugar de `frontend`,
+el `vercel.json` de la raiz redirige la URL publica hacia `frontend/` y evita
+el error `404: NOT_FOUND`.
